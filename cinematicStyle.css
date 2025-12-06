@@ -100,19 +100,19 @@
 }
 
 .moon-bg {
-    background-image: url('../Costellation/assets/Moon.png');
+    background-image: url('../assets/Moon.png');
     background-blend-mode: screen;
     background-color: rgba(0, 0, 0, 0.7);
 }
 
 .sky-bg {
-    background-image: url('../Costellation/assets/Sky1.png');
+    background-image: url('../assets/Sky1.png');
     background-blend-mode: overlay;
     background-color: rgba(12, 12, 46, 0.8);
 }
 
 .meteor-bg {
-    background-image: url('../Costellation/assets/Meteor.png');
+    background-image: url('../assets/Meteor.png');
     background-blend-mode: lighten;
     background-color: rgba(26, 13, 46, 0.8);
 }
@@ -338,4 +338,5 @@
 body.intro-active .container,
 body.intro-active .counter {
     display: none;
+
 }
