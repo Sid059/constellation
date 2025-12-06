@@ -1,0 +1,341 @@
+/* ===== CINEMATIC INTRODUCTION ===== */
+.intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a0a1a;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.intro-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease, visibility 1s ease;
+}
+
+.intro-screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.intro-content {
+    text-align: center;
+    padding: 40px;
+    max-width: 800px;
+    z-index: 2;
+    position: relative;
+}
+
+/* Play Button Screen */
+.intro-start {
+    background: radial-gradient(ellipse at center, 
+        #000000 0%,
+        #0a0a1a 30%,
+        #1a1a2e 60%,
+        #2d2d4a 100%);
+}
+
+.intro-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 4rem;
+    color: #ffd700;
+    margin-bottom: 20px;
+    animation: float 6s ease-in-out infinite;
+}
+
+.intro-subtitle {
+    font-size: 1.5rem;
+    color: #a2d2ff;
+    margin-bottom: 50px;
+    opacity: 0.9;
+}
+
+.play-btn {
+    background: linear-gradient(45deg, #ffd700, #ffafcc);
+    border: none;
+    color: #0c0c2e;
+    padding: 20px 50px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+}
+
+.play-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+}
+
+.play-btn i {
+    font-size: 1.8rem;
+}
+
+/* Background Images */
+.intro-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;
+    z-index: 1;
+}
+
+.moon-bg {
+    background-image: url('../Costellation/assets/Moon.png');
+    background-blend-mode: screen;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.sky-bg {
+    background-image: url('../Costellation/assets/Sky1.png');
+    background-blend-mode: overlay;
+    background-color: rgba(12, 12, 46, 0.8);
+}
+
+.meteor-bg {
+    background-image: url('../Costellation/assets/Meteor.png');
+    background-blend-mode: lighten;
+    background-color: rgba(26, 13, 46, 0.8);
+}
+
+/* Screen Titles */
+.screen-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    color: #ffd700;
+    margin-bottom: 40px;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.screen-title i {
+    margin: 0 15px;
+}
+
+/* Typewriter Effect */
+.typewriter-container {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 30px auto;
+    max-width: 700px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.typewriter-text {
+    font-size: 1.8rem;
+    line-height: 1.6;
+    color: #f8f0e3;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.typewriter-text::after {
+    content: '|';
+    animation: blink 1s infinite;
+    color: #ffd700;
+    margin-left: 5px;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Moon Info */
+.moon-info {
+    margin-top: 40px;
+}
+
+.moon-details {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.moon-fact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 25px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.moon-fact i {
+    color: #ffd700;
+    font-size: 1.5rem;
+}
+
+.moon-fact span {
+    color: #f8f0e3;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+/* Constellation Highlight */
+.constellation-highlight {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.constellation-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: rgba(162, 210, 255, 0.1);
+    border-radius: 15px;
+    border: 1px solid rgba(162, 210, 255, 0.3);
+}
+
+.constellation-item i {
+    color: #a2d2ff;
+    font-size: 2rem;
+}
+
+.constellation-item span {
+    color: #f8f0e3;
+    font-size: 1.2rem;
+}
+
+/* Meteor Facts */
+.meteor-facts-intro {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.meteor-fact {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 25px;
+    background: rgba(255, 107, 107, 0.1);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    max-width: 300px;
+}
+
+.meteor-fact i {
+    color: #ff6b6b;
+    font-size: 2.5rem;
+}
+
+.meteor-fact strong {
+    display: block;
+    color: #ffafcc;
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+}
+
+.meteor-fact p {
+    color: #f8f0e3;
+    margin: 0;
+}
+
+/* Final Screen */
+.intro-final {
+    background: linear-gradient(135deg, 
+        #0c0c2e 0%,
+        #2d1b69 50%,
+        #0c0c2e 100%);
+}
+
+.final-message-intro {
+    margin: 40px 0;
+}
+
+.final-message-intro p {
+    font-size: 2rem;
+    color: #ffd700;
+    margin: 15px 0;
+    font-family: 'Dancing Script', cursive;
+}
+
+.begin-btn {
+    background: linear-gradient(45deg, #ffd700, #ffafcc, #a2d2ff);
+    border: none;
+    color: #0c0c2e;
+    padding: 20px 50px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+    margin-top: 30px;
+}
+
+.begin-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 60px rgba(255, 215, 0, 0.7);
+}
+
+/* Progress Dots */
+.intro-progress {
+    position: fixed;
+    bottom: 40px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    z-index: 10000;
+}
+
+.progress-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.progress-dot.active {
+    background: #ffd700;
+    transform: scale(1.3);
+    box-shadow: 0 0 10px #ffd700;
+}
+
+.progress-dot:hover {
+    background: rgba(255, 215, 0, 0.7);
+}
+
+/* ===== HIDE MAIN CONTENT DURING INTRO ===== */
+body.intro-active .container,
+body.intro-active .counter {
+    display: none;
+}
