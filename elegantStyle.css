@@ -1,0 +1,604 @@
+/* ===== ELEGANT INTRODUCTION STYLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cormorant Garamond', serif;
+    background: #0a0a0a;
+    color: #ffffff;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+.elegant-intro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a0a0a;
+    z-index: 9999;
+}
+
+/* ===== START SCREEN ===== */
+.start-screen {
+    background: #0a0a0a;
+    position: relative;
+}
+
+.intro-content {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 40px;
+}
+
+/* Title Styling */
+.title-container {
+    text-align: center;
+    animation: fadeInUp 1s ease 0.3s forwards;
+    opacity: 0;
+}
+
+.main-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    letter-spacing: 4px;
+    color: #ffffff;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.subtitle-line {
+    width: 100px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.4);
+    margin: 0 auto 15px;
+}
+
+.subtitle-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 2.5px;
+    color: rgba(255, 255, 255, 0.8);
+    text-transform: uppercase;
+}
+
+/* Elegant Play Button */
+.elegant-play-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    padding: 14px 36px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: fadeIn 1s ease 0.6s forwards;
+    opacity: 0;
+}
+
+.elegant-play-btn:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+}
+
+.btn-arrow {
+    transition: transform 0.3s ease;
+    font-size: 1rem;
+}
+
+.elegant-play-btn:hover .btn-arrow {
+    transform: translateX(3px);
+}
+
+/* ===== CINEMATIC SCREENS ===== */
+.intro-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.intro-screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Background Images */
+.screen-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.intro-screen.active .screen-background {
+    opacity: 1;
+}
+
+.moon-screen .screen-background {
+    background-image: url('./assets/Moon.png');
+    background-position: center center;
+    background-size: cover;
+}
+
+.sky-screen .screen-background {
+    background-image: url('./assets/Sky2.png');
+    background-position: center center;
+    background-size: cover;
+}
+
+.meteor-screen .screen-background {
+    background-image: url('./assets/Meteor.png');
+    background-position: center center;
+    background-size: cover;
+}
+
+/* Screen Content */
+.screen-content {
+    position: relative;
+    height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 2;
+}
+
+/* Screen Header */
+.screen-header {
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
+    max-width: 600px;
+    text-align: left;
+}
+
+.screen-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Message Container */
+.message-container {
+    margin-bottom: 60px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease 0.2s forwards;
+    max-width: 600px;
+}
+
+.cinematic-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    line-height: 1.7;
+    color: #ffffff;
+    font-weight: 300;
+    min-height: 150px;
+    text-align: left;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.cinematic-text::after {
+    content: '|';
+    animation: blink 1s infinite;
+    color: rgba(255, 255, 255, 0.8);
+    margin-left: 2px;
+}
+
+/* Final Screen */
+.final-screen {
+    background: #0a0a0a;
+    position: relative;
+}
+
+.final-screen::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('./assets/Sky2.png') center/cover no-repeat;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.8s ease;
+}
+
+.final-screen.active::before {
+    opacity: 1;
+}
+
+/* Final Screen Content - Centered */
+.final-screen .screen-content {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    padding: 60px 40px;
+    margin: 0 auto;
+    max-width: 700px;
+    width: calc(100% - 80px);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.final-header {
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
+    max-width: 600px;
+}
+
+.final-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.final-message {
+    margin-bottom: 50px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease 0.2s forwards;
+    max-width: 600px;
+}
+
+.final-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: #ffffff;
+    font-weight: 300;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Enter Constellation Button */
+.enter-constellation-btn {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    padding: 16px 45px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.4s forwards;
+    text-align: center;
+    min-width: 250px;
+    backdrop-filter: blur(8px);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.enter-constellation-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.enter-constellation-btn:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.enter-constellation-btn:hover::before {
+    left: 100%;
+}
+
+/* ===== PROGRESS INDICATOR ===== */
+.progress-indicator {
+    position: fixed;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    z-index: 10000;
+}
+
+.progress-dots {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.progress-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(2px);
+}
+
+.progress-dot.active {
+    background: #ffffff;
+    transform: scale(1.4);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+/* ===== NAVIGATION ARROWS ===== */
+.nav-arrows {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+    z-index: 10000;
+}
+
+.nav-arrow {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.9);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    backdrop-filter: blur(8px);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.nav-arrow:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.nav-arrow:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
+.nav-arrow:disabled:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+    /* Start Screen */
+    .intro-content {
+        padding: 20px;
+        gap: 35px;
+        text-align: center;
+    }
+    
+    .main-title {
+        font-size: 2rem;
+        letter-spacing: 3px;
+    }
+    
+    .subtitle-text {
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+    }
+    
+    .elegant-play-btn {
+        padding: 12px 28px;
+        font-size: 0.7rem;
+        justify-content: center;
+    }
+    
+    /* Cinematic Screens */
+    .screen-content {
+        padding: 40px 20px;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .screen-header,
+    .message-container {
+        text-align: center;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .screen-title {
+        font-size: 1.8rem;
+    }
+    
+    .cinematic-text {
+        font-size: 1.1rem;
+        min-height: 120px;
+        text-align: center;
+        line-height: 1.6;
+    }
+    
+    /* Final Screen */
+    .final-screen .screen-content {
+        padding: 40px 20px;
+        width: calc(100% - 40px);
+        max-width: 500px;
+    }
+    
+    .final-title {
+        font-size: 1.8rem;
+    }
+    
+    .final-text {
+        font-size: 1.1rem;
+    }
+    
+    .enter-constellation-btn {
+        padding: 14px 35px;
+        font-size: 0.7rem;
+        min-width: 220px;
+    }
+    
+    /* Navigation */
+    .nav-arrows {
+        padding: 0 15px;
+    }
+    
+    .nav-arrow {
+        width: 38px;
+        height: 38px;
+        font-size: 0.9rem;
+    }
+    
+    .progress-indicator {
+        bottom: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Start Screen */
+    .main-title {
+        font-size: 1.6rem;
+        letter-spacing: 2px;
+    }
+    
+    .subtitle-text {
+        font-size: 0.6rem;
+        letter-spacing: 1.5px;
+    }
+    
+    .elegant-play-btn {
+        padding: 10px 24px;
+        font-size: 0.6rem;
+        gap: 6px;
+    }
+    
+    /* Cinematic Screens */
+    .screen-content {
+        padding: 30px 15px;
+    }
+    
+    .screen-title {
+        font-size: 1.5rem;
+    }
+    
+    .cinematic-text {
+        font-size: 1rem;
+        min-height: 100px;
+    }
+    
+    /* Final Screen */
+    .final-screen .screen-content {
+        padding: 30px 15px;
+        width: calc(100% - 30px);
+    }
+    
+    .final-title {
+        font-size: 1.5rem;
+    }
+    
+    .final-text {
+        font-size: 1rem;
+    }
+    
+    .enter-constellation-btn {
+        padding: 12px 30px;
+        font-size: 0.6rem;
+        min-width: 200px;
+    }
+    
+    /* Navigation */
+    .nav-arrow {
+        width: 34px;
+        height: 34px;
+        font-size: 0.8rem;
+    }
+    
+    .progress-dot {
+        width: 6px;
+        height: 6px;
+    }
+}
