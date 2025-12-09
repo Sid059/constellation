@@ -1,398 +1,246 @@
-// ===== CINEMATIC INTRODUCTION =====
-const introMessages = {
-    moon: "As you took your first breath at 1:30 AM, a gentle waning crescent moon watched over you. Its soft silver light was the universe's first lullaby, whispering promises of magic and wonder to come.",
-    
-    sky: "Above you stretched a canvas of infinite stars. Libra, your constellation, was setting in the western sky - a celestial signature written just for you. Venus, the evening star, shone with particular brilliance, blessing you with love and beauty.",
-    
-    meteor: "But the sky wasn't just watching - it was celebrating! The Geminids meteor shower was at its peak, painting streaks of light across the darkness. Each shooting star was a spark of joy, a celestial firework display welcoming you to the world."
-};
-
-let currentScreen = 0;
-let isTyping = false;
-let typeTimeout;
-
-// DOM Elements for intro
-const introElements = {
-    introOverlay: document.getElementById('introOverlay'),
-    playBtn: document.getElementById('playIntro'),
-    beginGameBtn: document.getElementById('beginGame'),
-    screens: document.querySelectorAll('.intro-screen'),
-    progressDots: document.querySelectorAll('.progress-dot'),
-    moonText: document.getElementById('moonText'),
-    skyText: document.getElementById('skyText'),
-    meteorText: document.getElementById('meteorText')
-};
-
-// Typewriter effect
-function typeWriter(element, text, speed = 40, callback = null) {
-    isTyping = true;
-    let i = 0;
-    element.innerHTML = '';
-    
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            typeTimeout = setTimeout(type, speed);
-        } else {
-            isTyping = false;
-            if (callback) callback();
-        }
-    }
-    
-    type();
-}
-
-// Skip typing if user clicks
-function skipTyping() {
-    if (isTyping) {
-        clearTimeout(typeTimeout);
-        isTyping = false;
-        
-        const texts = [introMessages.moon, introMessages.sky, introMessages.meteor];
-        const elements = [introElements.moonText, introElements.skyText, introElements.meteorText];
-        
-        if (currentScreen >= 1 && currentScreen <= 3) {
-            elements[currentScreen - 1].textContent = texts[currentScreen - 1];
-        }
-    }
-}
-
-// Switch to a specific screen
-function goToScreen(screenIndex) {
-    if (screenIndex < 0 || screenIndex >= introElements.screens.length) return;
-    
-    // Hide all screens
-    introElements.screens.forEach(screen => screen.classList.remove('active'));
-    
-    // Show current screen
-    introElements.screens[screenIndex].classList.add('active');
-    
-    // Update progress dots
-    introElements.progressDots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === screenIndex);
-    });
-    
-    currentScreen = screenIndex;
-    
-    // Handle screen-specific actions
-    switch(screenIndex) {
-        case 1: // Moon screen
-            setTimeout(() => {
-                typeWriter(introElements.moonText, introMessages.moon, 40, () => {
-                    setTimeout(() => goToScreen(2), 3000);
-                });
-            }, 500);
-            break;
-            
-        case 2: // Sky screen
-            setTimeout(() => {
-                typeWriter(introElements.skyText, introMessages.sky, 40, () => {
-                    setTimeout(() => goToScreen(3), 3000);
-                });
-            }, 500);
-            break;
-            
-        case 3: // Meteor screen
-            setTimeout(() => {
-                typeWriter(introElements.meteorText, introMessages.meteor, 40, () => {
-                    setTimeout(() => goToScreen(4), 3000);
-                });
-            }, 500);
-            break;
-    }
-}
-
-// Start the introduction
-function startIntroduction() {
-    // Hide play button screen
-    goToScreen(1);
-    
-    // Add click to skip typing
-    introElements.introOverlay.addEventListener('click', skipTyping);
-    
-    // Also allow skipping with spacebar
-    document.addEventListener('keydown', (e) => {
-        if (e.code === 'Space' || e.code === 'Enter') {
-            skipTyping();
-        }
-    });
-}
-
-// Initialize introduction
-function initIntroduction() {
-    if (!introElements.introOverlay) return;
-    
-    // Add intro-active class to body
-    document.body.classList.add('intro-active');
-    
-    // Play button event
-    if (introElements.playBtn) {
-        introElements.playBtn.addEventListener('click', startIntroduction);
-    }
-    
-    // Begin game button event
-    if (introElements.beginGameBtn) {
-        introElements.beginGameBtn.addEventListener('click', () => {
-            // Hide intro
-            introElements.introOverlay.style.opacity = '0';
-            introElements.introOverlay.style.visibility = 'hidden';
-            
-            // Show main content
-            document.body.classList.remove('intro-active');
-            
-            // Remove intro from DOM after transition
-            setTimeout(() => {
-                if (introElements.introOverlay.parentNode) {
-                    introElements.introOverlay.parentNode.removeChild(introElements.introOverlay);
-                }
-            }, 1000);
-        });
-    }
-    
-    // Progress dot clicks
-    introElements.progressDots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            if (index !== currentScreen) {
-                goToScreen(index);
-            }
-        });
-    });
-}
-
-// ===== CONFIGURATION - EDIT THIS SECTION! =====
-// Add your personal reasons here (15-25 is a good number)
+// ===== CONFIGURATION =====
 const starReasons = [
-    "The way your eyes light up when you talk about things you love",
-    "How you always know exactly what to say when I'm feeling down",
-    "That little dance you do when you're making breakfast",
-    "Your courage to always be authentically yourself",
-    "The sound of your laugh that makes everything better",
-    "How you remember small details about people you care about",
-    "Your passion for the things you believe in",
-    "The warmth of your hand in mine",
-    "How you make ordinary moments feel magical",
-    "Your strength that inspires everyone around you",
-    "The way you see beauty in things others overlook",
-    "How you challenge me to be a better person",
-    "Your unwavering kindness, even when no one is watching",
-    "The peace I feel just being next to you",
-    "Your ability to find joy in the simplest things",
-    "The way you bite your lip when you're concentrating",
-    "How you always stand up for what's right",
-    "Your beautiful, creative mind",
-    "The comfort of your presence",
-    "How you love with your whole heart",
-    "The adorable way you wrinkle your nose when confused",
-    "How you make everyone feel seen and heard",
-    "Your infectious enthusiasm for new adventures",
-    "The way you sing off-key in the car with zero shame",
-    "How you're both my calm and my excitement",
-    "Your resilience in facing challenges",
-    "The way you've made me a better version of myself"
+    "Thank God I met you. In every timeline, every universe, I would choose you—your light, your shadows, every piece of you that's still learning to shine.",
+
+"When you feel sad, remember you have me. I may not be much, but I will stand with you through every storm, every quiet night, every heavy moment.",
+
+"Even when the world doesn't clap for you, I will. Even without a trophy, I'll run to you just to whisper how incredibly proud I am of the simplest things you do.",
+
+"If you ever feel unattractive, know I could sit and stare at you for hours—memorizing the way light dances in your eyes, the curve of your smile, every detail that makes you, you.",
+
+"As years end and begin, my favorite part is knowing that through all the ups and downs, I still think of you first. I still smile at your name. I still feel that warmth when you're near.",
+
+"Your sadness is safe with me. I won't try to fix it—I'll just sit with you in the quiet, holding space for every emotion, every tear, every unspoken word.",
+
+"I choose you in your messy mornings and your tired evenings. I choose you in your laughter and your silence. I choose every version of you that exists.",
+
+"You don't have to go through anything alone. I may not have all the answers, but I have endless time for you—for your stories, your fears, your dreams.",
+
+"Even when the world feels heavy, I'll be here—quietly, gently, always. My love for you isn't loud or dramatic, it's just... constant.",
+
+"I'm not perfect, but I'm yours. In pain, in joy, in chaos, in calm—I'm staying. Through everything, I'm choosing to stay.",
+
+"I can't promise to fix everything, but I promise you'll never face anything alone. My hand will always be there, waiting for yours.",
+
+"You mean more to me than you'll ever know. Even on days you can't see your own worth, I'll be there to remind you of the light you carry.",
+
+"No matter what you're feeling, please don't forget—you have someone who truly, deeply cares. Someone who sees you, really sees you.",
+
+"Some days the weight feels heavier, I know. But my shoulders are here to share the load, my arms are here to hold you through it.",
+
+"Maybe the best love isn't the loud, dramatic kind—it's the real kind. The kind that smiles when your name appears, that feels warm when you're near.",
+
+"If the coming year brings anything, I hope it brings you closer to happiness... and maybe, just a little closer to me too.",
+
+"I want to be the person you text when you're having a bad day. The one who shows up with your favorite comfort, no questions asked.",
+
+"You are my favorite 'what if' that became 'what is.' My favorite dream that woke up beside me.",
+
+"There's a special kind of magic in the way you exist—how you turn ordinary moments into memories I'll cherish forever.",
+
+"I don't need grand gestures. Just knowing you're thinking of me, that I cross your mind during your day—that's enough to make my world brighter.",
+
+"Your peace matters to me. Your joy matters. Your quiet contentment on a lazy Sunday matters. All of you matters.",
+
+"I'll always come running—not because you need saving, but because I want to be there. Because your happiness is worth every step.",
+
+"You have this way of making the world feel softer, kinder, more beautiful—just by being in it.",
+
+"Even on your hardest days, you're still the most beautiful thing I've ever seen. Your strength, your resilience—it takes my breath away.",
+
+"I want to be the safe place you return to. The arms that welcome you home, no matter what kind of day you've had.",
+
+"You don't have to earn my love. It's not a prize for achievements. It's just... yours. Always has been, always will be.",
+
+"If love had a face, it would look like you first thing in the morning, sleepy and soft. It would sound like your laughter. It would feel like home.",
 ];
 
-// Personal final message - customize this!
-const finalMessage = `
-You've discovered all the stars in your constellation, my love. 
-Each one represents just a fraction of why you're so special to me. 
-But like the universe, my love for you is infinite and ever-expanding.
+const finalMessage = `You've discovered all 27 reasons why you shine, my love. Each one represents just a fraction of why you're so special to me. But like the universe, my love for you is infinite and ever-expanding.
 
 On your birthday and every day, I want you to remember:
 You are loved more than all the stars in all the galaxies combined.
 
-Happy Birthday, my shining star. ✨💫
-`;
+Happy Birthday, my shining star ❤️💫`;
 
-const constellationPoints = [];
-const minDistance = 8; // Minimum spacing between stars (in percentage)
-const maxAttempts = 100;
-
-// Start with the Libra quadrangle
-const libraQuadrangle = [
-    [35, 25],  // Zubeneschamali (Beta Librae)
-    [65, 25],  // Zubenelgenubi (Alpha Librae)
-    [30, 65],  // Gamma Librae
-    [70, 65]   // Sigma Librae
-];
-
-// Add the Libra quadrangle stars
-constellationPoints.push(...libraQuadrangle);
-
-// Generate remaining 23 stars with spacing
-for (let i = 4; i < 27; i++) {
-    let attempts = 0;
-    let validPosition = false;
-    let x, y;
+// ===== IMPROVED STAR POSITION GENERATION =====
+function generateRandomStarPositions(count, minDistance = 48) { // 0.5 inch = ~48 pixels
+    const positions = [];
+    const maxAttempts = 2000; // Increased for better spacing
     
-    while (!validPosition && attempts < maxAttempts) {
-        attempts++;
+    // Grid-based approach for better distribution
+    const gridSize = Math.ceil(Math.sqrt(count));
+    const cellWidth = 85 / gridSize; // Use 85% of width for grid
+    const cellHeight = 85 / gridSize; // Use 85% of height for grid
+    
+    // Start with a grid-based distribution
+    for (let i = 0; i < count; i++) {
+        let attempts = 0;
+        let validPosition = false;
+        let x, y;
         
-        // Generate random position with buffer from edges
-        x = 5 + Math.random() * 90;  // Between 5% and 95%
-        y = 5 + Math.random() * 90;  // Between 5% and 95%
-        
-        // Check distance from all existing stars
-        validPosition = true;
-        
-        for (let j = 0; j < constellationPoints.length; j++) {
-            const [existingX, existingY] = constellationPoints[j];
-            const distance = Math.sqrt(
-                Math.pow(x - existingX, 2) + 
-                Math.pow(y - existingY, 2)
-            );
+        // First try: Use grid-based position
+        if (i < gridSize * gridSize) {
+            const gridRow = Math.floor(i / gridSize);
+            const gridCol = i % gridSize;
             
-            if (distance < minDistance) {
-                validPosition = false;
-                break;
+            // Base position within grid cell
+            const baseX = 10 + (gridCol * cellWidth) + (cellWidth / 2);
+            const baseY = 10 + (gridRow * cellHeight) + (cellHeight / 2);
+            
+            // Add small random offset within cell
+            x = baseX + (Math.random() * 10 - 5);
+            y = baseY + (Math.random() * 10 - 5);
+            
+            // Ensure within bounds
+            x = Math.max(10, Math.min(90, x));
+            y = Math.max(10, Math.min(90, y));
+            
+            validPosition = true;
+            
+            // Check distance from existing stars
+            for (const pos of positions) {
+                const distance = Math.sqrt(Math.pow(pos[0] - x, 2) + Math.pow(pos[1] - y, 2));
+                if (distance < minDistance) {
+                    validPosition = false;
+                    break;
+                }
             }
         }
+        
+        // If grid position didn't work, try random positions
+        while (!validPosition && attempts < maxAttempts) {
+            // Generous margin at edges for better clickability
+            x = 12 + Math.random() * 76; // 12-88% to avoid edges
+            y = 12 + Math.random() * 76;
+            
+            // Check distance from existing stars
+            validPosition = true;
+            for (const pos of positions) {
+                const distance = Math.sqrt(Math.pow(pos[0] - x, 2) + Math.pow(pos[1] - y, 2));
+                if (distance < minDistance) {
+                    validPosition = false;
+                    break;
+                }
+            }
+            
+            attempts++;
+        }
+        
+        // If we still couldn't find a good position, reduce minimum distance
+        if (!validPosition) {
+            console.warn(`Could not find optimal position for star ${i+1}, using fallback`);
+            x = 12 + Math.random() * 76;
+            y = 12 + Math.random() * 76;
+            
+            // Try to keep some distance anyway
+            for (const pos of positions) {
+                const distance = Math.sqrt(Math.pow(pos[0] - x, 2) + Math.pow(pos[1] - y, 2));
+                if (distance < 30) { // Minimum 30px if really crowded
+                    x = 12 + Math.random() * 76;
+                    y = 12 + Math.random() * 76;
+                }
+            }
+        }
+        
+        positions.push([x, y]);
     }
     
-    if (validPosition) {
-        constellationPoints.push([x, y]);
-    } else {
-        // Fallback position (should rarely happen)
-        constellationPoints.push([20 + (i * 3) % 70, 20 + (i * 4) % 60]);
-        console.warn(`Using fallback position for star ${i}`);
-    }
+    console.log(`Generated ${positions.length} star positions with min distance: ${minDistance}px`);
+    return positions;
 }
 
-// ===== SECRET LIBRA CONFIGURATION =====
-// The 4 main Libra stars that form the quadrangle
-const libraStarIndices = [0, 1, 2, 3]; // Only 4 stars now
-
-// Libra constellation connections for the quadrangle
-const libraConnections = [
-    // Connect to form a quadrilateral
-    [0, 1], // Top: Zubeneschamali to Zubenelgenubi
-    [1, 3], // Right: Zubenelgenubi to Sigma Librae
-    [3, 2], // Bottom: Sigma Librae to Gamma Librae
-    [2, 0], // Left: Gamma Librae to Zubeneschamali
-];
-
-// Libra reveal message - updated for 4 stars
-const libraRevealMessage = `
-✨ LIBRA CONSTELLATION QUADRANGLE DISCOVERED! ✨
-
-You've discovered the 4 main stars of the Libra constellation!
-Just like these stars form a perfect balance in the sky,
-you bring harmony and beauty to everything you touch.
-
-Each star represents a special quality you share:
-• Zubeneschamali (The Brightest Star) - Your radiant energy that lights up every room
-• Zubenelgenubi (The Balanced Pair) - Your ability to see all sides and bring people together  
-• Gamma Librae (The Orange Giant) - Your warm, generous heart that glows with kindness
-• Sigma Librae (The Red Giant) - Your passionate spirit that fuels everything you do
-
-These stars have guided travelers for centuries,
-and you guide me every day with your wisdom and grace.
-
-As a Libra, you are the balance in my universe,
-the harmony in my heart, and the beauty in my world.
-
-May your birthday be as bright and beautiful as these stars,
-and may this year bring you all the joy you bring to others.
-`;
+// Global variable for current positions
+let currentStarPositions = [];
 
 // ===== APP STATE =====
 let discoveredStars = new Set();
 let stars = [];
-let showLines = false; // Start with lines hidden
-let currentStarIndex = 0;
-let discoveredLibraStars = new Set(); // Track which Libra stars are found
-let libraRevealed = false; // Whether Libra has been revealed
 
 // ===== DOM ELEMENTS =====
-const elements = {
-    starsContainer: document.getElementById('starsContainer'),
-    canvas: document.getElementById('constellation-canvas'),
-    modalOverlay: document.getElementById('modalOverlay'),
-    modalTitle: document.getElementById('modalTitle'),
-    modalMessage: document.getElementById('modalMessage'),
-    closeModal: document.getElementById('closeModal'),
-    discoveredCount: document.getElementById('discoveredCount'),
-    totalStars: document.getElementById('totalStars'),
-    progressFill: document.getElementById('progressFill'),
-    counterText: document.getElementById('counterText'),
-    finalMessage: document.getElementById('finalMessage'),
-    finalText: document.getElementById('finalText'),
-    closeFinal: document.getElementById('closeFinal'),
-    toggleLines: document.getElementById('toggleLines'),
-    resetStars: document.getElementById('resetStars'),
-    hintBtn: document.getElementById('hintBtn'),
-    starSound: document.getElementById('starSound')
-};
+function getElements() {
+    return {
+        starsContainer: document.getElementById('starsContainer'),
+        modalOverlay: document.getElementById('modalOverlay'),
+        modalTitle: document.getElementById('modalTitle'),
+        modalMessage: document.getElementById('modalMessage'),
+        closeModal: document.getElementById('closeModal'),
+        discoveredCount: document.getElementById('discoveredCount'),
+        totalStars: document.getElementById('totalStars'),
+        progressFill: document.getElementById('progressFill'),
+        counterText: document.getElementById('counterText'),
+        finalMessage: document.getElementById('finalMessage'),
+        finalText: document.getElementById('finalText'),
+        closeFinal: document.getElementById('closeFinal'),
+        resetStars: document.getElementById('resetStars'),
+        hintBtn: document.getElementById('hintBtn'),
+        starSound: document.getElementById('starSound')
+    };
+}
 
 // ===== INITIALIZATION =====
 function init() {
+    console.log("=== INITIALIZING STAR FIELD ===");
+    
+    // Get elements
+    const elements = getElements();
+    
+    // Check if essential elements exist
+    if (!elements.starsContainer) {
+        console.error("ERROR: starsContainer not found!");
+        return;
+    }
+    
+    console.log("✓ All DOM elements found");
+    
     // Set total stars count
     elements.totalStars.textContent = starReasons.length;
+    elements.discoveredCount.textContent = '0';
     
-    // Create canvas context
-    const ctx = elements.canvas.getContext('2d');
+    // Generate initial random positions with 0.5 inch (48px) minimum spacing
+    currentStarPositions = generateRandomStarPositions(starReasons.length, 48);
+    
+    // Create stars immediately
+    createStars(elements);
     
     // Setup event listeners
-    setupEventListeners();
+    setupEventListeners(elements);
     
-    // Create stars
-    createStars();
+    // Update progress bar
+    updateProgress(elements);
     
-    // Start with NO lines shown
-    drawMinimalLines(ctx);
+    console.log("✓ Star field initialized with", starReasons.length, "stars");
+    console.log("Stars created:", document.querySelectorAll('.star').length);
     
-    // Update toggle button text
-    elements.toggleLines.innerHTML = '<i class="fas fa-project-diagram"></i> Show Lines';
-    
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        resizeCanvas();
-        if (showLines) {
-            if (libraRevealed) {
-                drawLibraConstellation(ctx);
-            } else {
-                drawMinimalLines(ctx);
-            }
-        }
-        positionStars();
-    });
-    
-    // Initial resize
-    resizeCanvas();
-    
-    console.log("✨ Constellation initialized with", starReasons.length, "stars ✨");
-    console.log("✨ Secret Libra quadrangle hidden in stars:", libraStarIndices.join(', '), "✨");
-    console.log("✨ 23 stars scattered randomly around the canvas ✨");
+    // Ensure body is scrollable
+    document.body.style.overflowY = 'auto';
 }
 
 // ===== STAR CREATION =====
-function createStars() {
+function createStars(elements) {
+    console.log("Creating stars...");
+    
     // Clear existing stars
     elements.starsContainer.innerHTML = '';
     stars = [];
     
     // Create each star
-    constellationPoints.forEach((point, index) => {
-        if (index >= starReasons.length) return;
-        
+    for (let i = 0; i < starReasons.length; i++) {
         const star = document.createElement('div');
         star.className = 'star';
-        star.dataset.index = index;
+        star.dataset.index = i;
         
-        // Create 8 rays for each star
-        for (let i = 0; i < 8; i++) {
+        // Create 5 rays for each star (5-pointed star)
+        for (let j = 0; j < 5; j++) {
             const ray = document.createElement('div');
             ray.className = 'star-ray';
             star.appendChild(ray);
         }
         
-        // Mark Libra stars with a special class
-        if (libraStarIndices.includes(index)) {
-            star.classList.add('libra-star');
-        }
-        
         // Add click event
-        star.addEventListener('click', () => revealStar(index));
+        star.addEventListener('click', (e) => {
+            e.stopPropagation();
+            revealStar(i, elements);
+        });
         
         // Add to container
         elements.starsContainer.appendChild(star);
@@ -400,213 +248,139 @@ function createStars() {
         // Store star reference
         stars.push({
             element: star,
-            index: index,
-            discovered: false,
-            isLibraStar: libraStarIndices.includes(index)
+            index: i,
+            discovered: false
         });
-    });
+    }
     
-    // Position stars
-    positionStars();
+    console.log(`Created ${stars.length} stars with 5 rays each`);
+    
+    // Position stars immediately
+    setTimeout(() => {
+        positionStars(elements);
+    }, 50);
 }
 
-function positionStars() {
-    const container = document.querySelector('.constellation-area');
-    const width = container.offsetWidth;
-    const height = container.offsetHeight;
+function positionStars(elements) {
+    const container = elements.starsContainer.parentElement;
+    if (!container) {
+        console.error("Constellation container not found!");
+        return;
+    }
+    
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    
+    if (width === 0 || height === 0) {
+        console.warn("Container has zero dimensions, retrying in 100ms...");
+        setTimeout(() => positionStars(elements), 100);
+        return;
+    }
+    
+    console.log(`Positioning ${stars.length} stars in container: ${width}x${height}`);
+    
+    // Calculate pixel distance for 0.5 inch based on container size
+    // Use adaptive spacing: smaller on mobile, larger on desktop
+    const minPixelDistance = Math.min(48, width * 0.05); // 5% of width or 48px, whichever is smaller
+    
+    // Verify spacing and adjust if needed
+    const positionsCopy = [...currentStarPositions];
+    let adjustedPositions = [];
+    
+    for (let i = 0; i < positionsCopy.length; i++) {
+        let [xPercent, yPercent] = positionsCopy[i];
+        let validPosition = false;
+        let attempts = 0;
+        
+        while (!validPosition && attempts < 50) {
+            validPosition = true;
+            
+            // Check distance from all other adjusted positions
+            for (let j = 0; j < adjustedPositions.length; j++) {
+                const [otherX, otherY] = adjustedPositions[j];
+                const distancePx = Math.sqrt(
+                    Math.pow((xPercent/100)*width - (otherX/100)*width, 2) + 
+                    Math.pow((yPercent/100)*height - (otherY/100)*height, 2)
+                );
+                
+                if (distancePx < minPixelDistance) {
+                    // Too close, adjust position
+                    const angle = Math.random() * Math.PI * 2;
+                    const moveDistance = minPixelDistance / width * 100;
+                    xPercent += Math.cos(angle) * moveDistance;
+                    yPercent += Math.sin(angle) * moveDistance;
+                    
+                    // Keep within bounds
+                    xPercent = Math.max(8, Math.min(92, xPercent));
+                    yPercent = Math.max(8, Math.min(92, yPercent));
+                    
+                    validPosition = false;
+                    break;
+                }
+            }
+            
+            attempts++;
+        }
+        
+        adjustedPositions.push([xPercent, yPercent]);
+    }
+    
+    // Use adjusted positions
+    currentStarPositions = adjustedPositions;
     
     stars.forEach((star, index) => {
-        if (index >= constellationPoints.length) return;
+        const point = currentStarPositions[index];
+        const x = (point[0] / 100) * width;
+        const y = (point[1] / 100) * height;
         
-        const point = constellationPoints[index];
-        const x = (point[0] / 100) * width - 8; // 8 = half of star width (16/2)
-        const y = (point[1] / 100) * height - 8;
-        
+        // Position the star (centered on point)
         star.element.style.left = `${x}px`;
         star.element.style.top = `${y}px`;
         
-        // Store position for drawing lines
-        star.x = x + 8;
-        star.y = y + 8;
+        // Store position for hints
+        star.x = x;
+        star.y = y;
     });
+    
+    console.log("✓ Stars positioned with proper spacing");
 }
 
-// ===== CANVAS DRAWING =====
-function resizeCanvas() {
-    const container = document.querySelector('.constellation-area');
-    elements.canvas.width = container.offsetWidth;
-    elements.canvas.height = container.offsetHeight;
-}
-
-function drawMinimalLines(ctx) {
-    // Clear canvas
-    const canvas = elements.canvas;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+// ===== RESET WITH NEW RANDOM POSITIONS =====
+function resetWithNewPositions(elements) {
+    console.log("Resetting stars with new random positions...");
     
-    // Only draw VERY faint background connections
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
-    ctx.lineWidth = 0.5;
+    // Clear discovered stars
+    discoveredStars.clear();
     
-    // Minimal random connections (like distant stars)
-    stars.forEach((star, i) => {
-        // Only connect to one random neighbor
-        const randomIndex = Math.floor(Math.random() * stars.length);
-        if (randomIndex !== i && Math.random() > 0.7) {
-            ctx.beginPath();
-            ctx.moveTo(star.x, star.y);
-            ctx.lineTo(stars[randomIndex].x, stars[randomIndex].y);
-            ctx.stroke();
-        }
+    // Generate new random positions with 0.5 inch (48px) spacing
+    currentStarPositions = generateRandomStarPositions(starReasons.length, 48);
+    
+    // Reset star states
+    stars.forEach(star => {
+        star.element.classList.remove('discovered');
+        star.discovered = false;
     });
     
-    // Draw subtle star glows
-    stars.forEach((star) => {
-        const glowSize = 4;
-        const gradient = ctx.createRadialGradient(
-            star.x, star.y, 0,
-            star.x, star.y, glowSize
-        );
-        
-        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
-        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-        
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, glowSize, 0, Math.PI * 2);
-        ctx.fill();
-    });
-}
-
-function drawLibraConstellation(ctx) {
-    // Clear canvas
-    const canvas = elements.canvas;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-     // Draw cosmic blue glowing lines
-    const time = Date.now() * 0.001; // For animation
-    const pulseIntensity = 0.5 + 0.5 * Math.sin(time * 2); // Pulsing effect
+    // Reposition stars
+    positionStars(elements);
     
-    // Draw Libra quadrangle with cosmic blue/white lines
-    ctx.strokeStyle = 'rgba(173, 216, 230, 0.9)'; // Light blue cosmic color
-    ctx.lineWidth = 1.5; // Thinner lines
-    ctx.shadowColor = 'rgba(135, 206, 250, 0.8)'; // Light blue glow
-    ctx.shadowBlur = 12 + pulseIntensity * 8; // Pulsing glow effect
-    ctx.setLineDash([]);
+    // Update UI
+    updateProgress(elements);
     
-    // Draw ONLY the outer quadrangle (no diagonals)
-    ctx.beginPath();
-    ctx.moveTo(stars[0].x, stars[0].y); // Start at Zubeneschamali
-    ctx.lineTo(stars[1].x, stars[1].y); // To Zubenelgenubi
-    ctx.lineTo(stars[3].x, stars[3].y); // To Sigma Librae
-    ctx.lineTo(stars[2].x, stars[2].y); // To Gamma Librae
-    ctx.closePath(); // Back to Zubeneschamali
-    ctx.stroke();
-
-     // Add cosmic blue glow dots at connection points
-    ctx.shadowBlur = 15;
-    ctx.fillStyle = 'rgba(173, 216, 230, 0.9)'; // Cosmic blue
-    libraStarIndices.forEach(index => {
-        const star = stars[index];
-        if (star) {
-            ctx.beginPath();
-            ctx.arc(star.x, star.y, 3 + pulseIntensity * 2, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    });
+    // Close any open modals
+    elements.modalOverlay.classList.remove('active');
+    elements.finalMessage.classList.remove('active');
     
-    // Reset shadow for other elements
-    ctx.shadowBlur = 0;
-    
-    // Make Libra stars glow with cosmic colors
-    libraStarIndices.forEach(index => {
-        const star = stars[index];
-        if (star) {
-            // Different cosmic colors for different star types
-            let gradient;
-            if (index === 0) {
-                // Zubeneschamali - Bright blue-white (hot star)
-                gradient = ctx.createRadialGradient(
-                    star.x, star.y, 0,
-                    star.x, star.y, 25
-                );
-                gradient.addColorStop(0, 'rgba(255, 255, 255, 1)'); // White core
-                gradient.addColorStop(0.2, 'rgba(200, 230, 255, 0.9)'); // Blue-white
-                gradient.addColorStop(0.5, 'rgba(173, 216, 230, 0.6)'); // Light blue
-                gradient.addColorStop(1, 'rgba(173, 216, 230, 0)');
-            } else if (index === 1) {
-                // Zubenelgenubi - Yellow-white binary system
-                gradient = ctx.createRadialGradient(
-                    star.x, star.y, 0,
-                    star.x, star.y, 22
-                );
-                gradient.addColorStop(0, 'rgba(255, 255, 220, 1)'); // Yellow-white core
-                gradient.addColorStop(0.3, 'rgba(255, 255, 200, 0.9)'); // Light yellow
-                gradient.addColorStop(0.6, 'rgba(255, 255, 180, 0.5)'); // Soft yellow
-                gradient.addColorStop(1, 'rgba(255, 255, 180, 0)');
-            } else if (index === 2) {
-                // Gamma Librae - Orange giant
-                gradient = ctx.createRadialGradient(
-                    star.x, star.y, 0,
-                    star.x, star.y, 20
-                );
-                gradient.addColorStop(0, 'rgba(255, 200, 100, 1)'); // Orange core
-                gradient.addColorStop(0.3, 'rgba(255, 165, 0, 0.9)'); // Bright orange
-                gradient.addColorStop(0.7, 'rgba(255, 140, 0, 0.5)'); // Deep orange
-                gradient.addColorStop(1, 'rgba(255, 140, 0, 0)');
-            } else {
-                // Sigma Librae - Red giant
-                gradient = ctx.createRadialGradient(
-                    star.x, star.y, 0,
-                    star.x, star.y, 20
-                );
-                gradient.addColorStop(0, 'rgba(255, 150, 150, 1)'); // Red core
-                gradient.addColorStop(0.3, 'rgba(255, 99, 71, 0.9)'); // Tomato red
-                gradient.addColorStop(0.6, 'rgba(255, 69, 0, 0.6)'); // Orange-red
-                gradient.addColorStop(1, 'rgba(255, 69, 0, 0)');
-            }
-            
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(star.x, star.y, 25, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Add subtle pulsing animation
-            star.element.style.animation = 'libraGlow 1.5s infinite alternate';
-        }
-    });
-    
-    // Add star labels with cosmic style
-    ctx.fillStyle = 'rgba(173, 216, 230, 0.9)';
-    ctx.font = 'bold 12px Arial';
-    ctx.textAlign = 'center';
-    
-    const starNames = [
-        ['Zubeneschamali', 'Beta Librae'],
-        ['Zubenelgenubi', 'Alpha Librae'],
-        ['Gamma Librae', 'Orange Giant'],
-        ['Sigma Librae', 'Red Giant']
-    ];
-    
-    libraStarIndices.forEach((index, i) => {
-        const star = stars[index];
-        if (star) {
-            // Add subtle glow to text
-            ctx.shadowColor = 'rgba(135, 206, 250, 0.8)';
-            ctx.shadowBlur = 8;
-            
-            ctx.fillText(starNames[i][0], star.x, star.y - 15);
-            ctx.fillText(starNames[i][1], star.x, star.y - 30);
-            
-            ctx.shadowBlur = 0;
-        }
-    });
+    console.log("✓ Stars reset with new random positions");
 }
 
 // ===== STAR INTERACTIONS =====
-function revealStar(index) {
+function revealStar(index, elements) {
     if (discoveredStars.has(index)) return;
     
-    // Play sound if available
+    console.log("Revealing star:", index);
+    
+    // Play sound
     if (elements.starSound) {
         elements.starSound.currentTime = 0;
         elements.starSound.play().catch(e => console.log("Audio play failed:", e));
@@ -614,95 +388,38 @@ function revealStar(index) {
     
     // Add to discovered
     discoveredStars.add(index);
-    currentStarIndex = index;
-    
-    // Check if this is a Libra star
-    const star = stars[index];
-    if (star.isLibraStar) {
-        discoveredLibraStars.add(index);
-        
-        // Make Libra star glow gold
-        star.element.style.setProperty('--star-color', '#ffd700');
-        star.element.classList.add('libra-discovered');
-        
-        // Check if all Libra stars are found
-        checkLibraReveal();
-    }
     
     // Update star appearance
+    const star = stars[index];
     star.element.classList.add('discovered');
     star.discovered = true;
     
     // Update UI
-    updateProgress();
+    updateProgress(elements);
     
     // Show message
-    showStarMessage(index);
-}
-
-function checkLibraReveal() {
-    // Check if all Libra stars are discovered
-    if (!libraRevealed && discoveredLibraStars.size === libraStarIndices.length) {
-        libraRevealed = true;
-        
-        // Reveal the Libra constellation!
-        const ctx = elements.canvas.getContext('2d');
-        drawLibraConstellation(ctx);
-        
-        // Auto-show lines if they're hidden
-        showLines = true;
-        elements.toggleLines.innerHTML = '<i class="fas fa-project-diagram"></i> Hide Lines';
-        
-        // Show special Libra reveal message
+    showStarMessage(index, elements);
+    
+    // Check if this was the last star
+    if (discoveredStars.size === starReasons.length) {
+        // Show final message after a short delay
         setTimeout(() => {
-            showLibraRevealMessage();
-        }, 800);
-        
-        // Play celebration sound if available
-        setTimeout(() => {
-            if (elements.starSound) {
-                // Play three quick sounds for celebration
-                elements.starSound.currentTime = 0;
-                elements.starSound.play().catch(e => console.log("Audio play failed:", e));
-                
-                setTimeout(() => {
-                    elements.starSound.currentTime = 0;
-                    elements.starSound.play();
-                }, 200);
-                
-                setTimeout(() => {
-                    elements.starSound.currentTime = 0;
-                    elements.starSound.play();
-                }, 400);
-            }
-        }, 500);
+            // Close the regular modal first
+            elements.modalOverlay.classList.remove('active');
+            // Then show the final message
+            showFinalMessage(elements);
+        }, 800); // 0.8 second delay
     }
 }
 
-function showLibraRevealMessage() {
-    elements.modalTitle.innerHTML = '♎ Libra Constellation Found!';
-    elements.modalMessage.innerHTML = libraRevealMessage.replace(/\n/g, '<br>');
-    elements.modalOverlay.classList.add('active');
-}
-
-function showStarMessage(index) {
-    elements.modalTitle.textContent = `Star #${index + 1}`;
-    
-    // Add Libra symbol if it's a Libra star
-    if (stars[index].isLibraStar) {
-        elements.modalTitle.textContent = `♎ Libra Star #${index + 1}`;
-    }
-    
-    // Just show the message for all stars
+function showStarMessage(index, elements) {
+    elements.modalTitle.textContent = `Reason #${index + 1}`;
     elements.modalMessage.textContent = starReasons[index];
-    
     elements.modalOverlay.classList.add('active');
-    
-    // Note: The button text will be updated in updateProgress() when all stars are found
 }
 
 // ===== PROGRESS & UI UPDATES =====
-function updateProgress() {
+function updateProgress(elements) {
     const discovered = discoveredStars.size;
     const total = starReasons.length;
     const percentage = (discovered / total) * 100;
@@ -714,45 +431,37 @@ function updateProgress() {
     elements.discoveredCount.textContent = discovered;
     elements.counterText.textContent = `Stars discovered: ${discovered}`;
     
-    // Add Libra star count if any are found
-    if (discoveredLibraStars.size > 0 && !libraRevealed) {
-        elements.counterText.textContent += ` (${discoveredLibraStars.size}/4 Libra stars)`;
-    } else if (libraRevealed) {
-        elements.counterText.textContent += ' ♎';
-    }
-    
-    // Check if all stars discovered
+    // Update close modal button text (but don't auto-show final message)
     if (discovered === total) {
-        // Change the button text when all stars are found
-        elements.closeModal.innerHTML = 'Close <i class="fas fa-heart"></i>';
-        //setTimeout(showFinalMessage, 1000);
+        elements.closeModal.innerHTML = 'See Final Message <i class="fas fa-heart"></i>';
     } else {
-        // Reset to normal text for other stars
         elements.closeModal.innerHTML = 'Continue Exploring <i class="fas fa-rocket"></i>';
     }
 }
 
-function showFinalMessage() {
+function showFinalMessage(elements) {
     elements.finalText.textContent = finalMessage;
     elements.finalMessage.classList.add('active');
 }
 
 // ===== EVENT LISTENERS =====
-function setupEventListeners() {
+function setupEventListeners(elements) {
+    console.log("Setting up event listeners...");
+    
     // Modal buttons
-
     elements.closeModal.addEventListener('click', () => {
-    // Check if all stars are discovered AND we're on the last star modal
-    if (discoveredStars.size === starReasons.length) {
-        // Show the final birthday message instead of closing
-        showFinalMessage();
-        // Also close the modal
-        elements.modalOverlay.classList.remove('active');
-    } else {
-        // Normal behavior for other stars
-        elements.modalOverlay.classList.remove('active');
-    }
-});
+        // Check if all stars are discovered
+        if (discoveredStars.size === starReasons.length) {
+            // Show final message and close modal
+            elements.modalOverlay.classList.remove('active');
+            setTimeout(() => {
+                showFinalMessage(elements);
+            }, 300);
+        } else {
+            // Just close the modal
+            elements.modalOverlay.classList.remove('active');
+        }
+    });
     
     // Close modal when clicking outside
     elements.modalOverlay.addEventListener('click', (e) => {
@@ -766,102 +475,43 @@ function setupEventListeners() {
         elements.finalMessage.classList.remove('active');
     });
     
-    // Control buttons
-    elements.toggleLines.addEventListener('click', () => {
-        showLines = !showLines;
-        const ctx = elements.canvas.getContext('2d');
-        
-        if (!showLines) {
-            ctx.clearRect(0, 0, elements.canvas.width, elements.canvas.height);
-            elements.toggleLines.innerHTML = '<i class="fas fa-project-diagram"></i> Show Lines';
-        } else {
-            if (libraRevealed) {
-                drawLibraConstellation(ctx);
-            } else {
-                drawMinimalLines(ctx);
-            }
-            elements.toggleLines.innerHTML = '<i class="fas fa-project-diagram"></i> Hide Lines';
-        }
-    });
-    
+    // Reset button - NOW WITH RANDOM POSITIONS
     elements.resetStars.addEventListener('click', () => {
-        if (confirm("Reset all stars and start over?")) {
-            discoveredStars.clear();
-            discoveredLibraStars.clear();
-            libraRevealed = false;
-            
-            stars.forEach(star => {
-                star.element.classList.remove('discovered', 'libra-discovered');
-                star.discovered = false;
-                star.element.style.animation = '';
-                star.element.style.setProperty('--star-color', 'white');
-            });
-            
-            updateProgress();
-            elements.modalOverlay.classList.remove('active');
-            
-            // Reset canvas
-            const ctx = elements.canvas.getContext('2d');
-            ctx.clearRect(0, 0, elements.canvas.width, elements.canvas.height);
-            showLines = false;
-            elements.toggleLines.innerHTML = '<i class="fas fa-project-diagram"></i> Show Lines';
+        if (confirm("Reset all stars and scatter them randomly in the sky?")) {
+            resetWithNewPositions(elements);
         }
     });
     
+    // Hint button
     elements.hintBtn.addEventListener('click', () => {
-        // Find an undiscovered star
         const undiscovered = stars.filter(star => !star.discovered);
         if (undiscovered.length > 0) {
             const randomStar = undiscovered[Math.floor(Math.random() * undiscovered.length)];
+            const container = elements.starsContainer.parentElement;
             
             // Briefly highlight the star
-            randomStar.element.style.filter = 'drop-shadow(0 0 20px #ff6b6b)';
-            randomStar.element.style.animation = 'none';
+            randomStar.element.style.zIndex = '100';
+            randomStar.element.style.filter = 'brightness(3) drop-shadow(0 0 20px white)';
             
             setTimeout(() => {
+                randomStar.element.style.zIndex = '';
                 randomStar.element.style.filter = '';
-                randomStar.element.style.animation = '';
             }, 2000);
             
-            // Give a hint about Libra stars if none are revealed yet
-            if (discoveredLibraStars.size === 0 && randomStar.isLibraStar) {
-                alert(`✨ Hint: This is one of the 4 main Libra stars! Look for stars that form a quadrilateral shape...`);
-            } else {
-                alert(`✨ Hint: There's an undiscovered star in the ${randomStar.x > elements.canvas.width/2 ? 'right' : 'left'} ${randomStar.y > elements.canvas.height/2 ? 'bottom' : 'top'} area!`);
-            }
+            alert(`✨ Hint: Look for a star in the ${randomStar.x > container.clientWidth/2 ? 'right' : 'left'} ${randomStar.y > container.clientHeight/2 ? 'bottom' : 'top'} area!`);
         } else {
             alert("🎉 You've found all the stars already!");
         }
     });
     
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (elements.modalOverlay.classList.contains('active')) {
-            if (e.key === 'Escape') {
-                elements.modalOverlay.classList.remove('active');
-            } else if (e.key === 'ArrowLeft' && !elements.prevBtn.disabled) {
-                elements.prevBtn.click();
-            } else if (e.key === 'ArrowRight' && !elements.nextBtn.disabled) {
-                elements.nextBtn.click();
-            }
-        }
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        positionStars(elements);
     });
+    
+    console.log("✓ Event listeners set up");
 }
 
-// ===== START THE APP =====
-// Save the original init function
-const originalInit = init;
-
-// Create a new init function that includes introduction
-function startEverything() {
-    initIntroduction();  // Start the cinematic intro
-    originalInit();      // Then run the original constellation code
-}
-
-// Wait for DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', startEverything);
-
-// Fallback in case DOM is already loaded
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    setTimeout(startEverything, 1);
-}
+// ===== MAKE INIT FUNCTION AVAILABLE =====
+window.initConstellation = init;
+console.log("Star field script loaded and ready");
