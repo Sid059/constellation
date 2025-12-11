@@ -20,7 +20,7 @@ body {
     width: 100%;
     height: 100%;
     background: #0a0a0a;
-    z-index: 9999;
+    z-index: 1;
 }
 
 /* ===== START SCREEN ===== */
@@ -224,78 +224,176 @@ body {
 }
 
 /* Final Screen */
+/* Find and REPLACE the final screen section with this: */
+
+/* Final Screen - MATCHES OTHER CINEMATIC SCREENS */
 .final-screen {
     background: #0a0a0a;
     position: relative;
 }
 
-.final-screen::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('./assets/Sky2.png') center/cover no-repeat;
-    opacity: 0;
-    z-index: -1;
-    transition: opacity 0.8s ease;
-}
-
-.final-screen.active::before {
-    opacity: 1;
-}
-
-/* Final Screen Content - Centered */
+/* Match the .screen-content style from other cinematic screens */
 .final-screen .screen-content {
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 10px;
-    padding: 60px 40px;
+    position: relative;
+    height: 100vh;
+    max-width: 1200px; /* Same as other screens */
     margin: 0 auto;
-    max-width: 700px;
-    width: calc(100% - 80px);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 2;
+    text-align: center; /* Center text for final screen */
+    align-items: center; /* Center items horizontally */
 }
 
+/* Final Header - matches .screen-header from other screens */
 .final-header {
     margin-bottom: 40px;
     opacity: 0;
     transform: translateY(20px);
     animation: fadeInUp 0.8s ease forwards;
-    max-width: 600px;
+    max-width: 800px; /* Slightly wider for title */
+    text-align: center;
+    width: 100%;
 }
 
 .final-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 2.4rem;
+    font-size: 2.8rem; /* Same as .screen-title in other screens */
     font-weight: 400;
     color: #ffffff;
     letter-spacing: 0.5px;
-    margin-bottom: 20px;
+    line-height: 1.3;
+    margin-bottom: 20px; /* More space below title */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+/* Final Message - matches .message-container from other screens */
 .final-message {
-    margin-bottom: 50px;
+    margin-bottom: 60px;
     opacity: 0;
     transform: translateY(20px);
     animation: fadeInUp 0.8s ease 0.2s forwards;
-    max-width: 600px;
+    max-width: 700px;
+    width: 100%;
 }
 
 .final-text {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    line-height: 1.6;
-    color: #ffffff;
+    font-size: 1.5rem; /* Slightly larger than .cinematic-text (1.3rem) */
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.95);
     font-weight: 300;
+    text-align: center;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 0;
+    display: block;
+}
+
+/* Enter Constellation Button - keep your existing button style but adjust position */
+.enter-constellation-btn {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    padding: 16px 45px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 1s ease 0.6s forwards;
+    text-align: center;
+    min-width: 250px;
+    backdrop-filter: blur(8px);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.enter-constellation-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.enter-constellation-btn:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.enter-constellation-btn:hover::before {
+    left: 100%;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablet */
+@media (max-width: 768px) {
+    .final-screen .screen-content {
+        padding: 40px 20px;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .final-header,
+    .final-message {
+        text-align: center;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .final-title {
+        font-size: 2.2rem; /* Same as other screens on mobile */
+    }
+    
+    .final-text {
+        font-size: 1.3rem; /* Same as other screens on mobile */
+        line-height: 1.6;
+        text-align: center;
+    }
+    
+    .enter-constellation-btn {
+        padding: 14px 35px;
+        font-size: 0.8rem;
+        min-width: 220px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .final-screen .screen-content {
+        padding: 30px 15px;
+    }
+    
+    .final-title {
+        font-size: 1.9rem;
+    }
+    
+    .final-text {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+    
+    .enter-constellation-btn {
+        padding: 12px 30px;
+        font-size: 0.75rem;
+        min-width: 200px;
+    }
 }
 
 /* Enter Constellation Button */
