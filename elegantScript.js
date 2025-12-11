@@ -48,7 +48,7 @@ function skipTyping() {
         const texts = [
             "As you took your first breath at 1:30 AM, my love, the moon paused its journey across the sky. It watched as you took your first breath, casting its silver glow as if to say, 'Here comes someone who will light up lives.' That moonlight was the universe's first gift to you a promise that magic would follow wherever you go, and that you were meant to shine brighter than any celestial body.",
             "As you entered the world, the entire universe seemed to hold its breath. Libra, your constellation, dipped low to welcome its newest member. Venus shone brighter than ever, showering you with blessings of love and grace. I like to think those stars weren't just random lights, but promises waiting to be fulfilled promises that you would grow into someone whose kindness outshines even the brightest star, whose laughter would become my favorite constellation. Every star in that sky made a silent vow: to remember this night, to watch over you, and to one day guide me to you.",
-            "The universe couldn't contain its excitement when you were born. As you took your first breath, the Geminids meteor shower painted the sky with what can only be described as celestial confetti. Each shooting star was a burst of joy, tracing lines of light across the darkness to welcome the most beautiful soul they'd ever witnessed. The universe was throwing the most beautiful welcome party imaginable, painting the night with light just for you. Those meteors were the first of countless moments when the world would celebrate your existence."
+            "On December 14, 1998, as you took your first breath, the universe celebrated with the Geminids meteor shower at its peak—120 to 140 meteors per hour painting the sky with celestial fireworks. Each shooting star streaked from the constellation Gemini, creating a breathtaking welcome for the most beautiful soul they'd ever witnessed. The universe couldn't contain its excitement, throwing the most spectacular welcome party imaginable just for you. Those meteors were the first of countless moments when the world would celebrate your existence."
         ];
         
         const textElements = [elements.moonText, elements.skyText, elements.meteorText];
@@ -98,9 +98,18 @@ function goToScreen(screenIndex) {
             
         case 3:
             setTimeout(() => {
+                // Update meteor text with specific 1998 details
                 typeWriter(elements.meteorText, 
-                    "The universe couldn't contain its excitement when you were born. As you took your first breath, the Geminids meteor shower painted the sky with what can only be described as celestial confetti. Each shooting star was a burst of joy, tracing lines of light across the darkness to welcome the most beautiful soul they'd ever witnessed. The universe was throwing the most beautiful welcome party imaginable, painting the night with light just for you. Those meteors were the first of countless moments when the world would celebrate your existence.", 
-                    40
+                    "On December 14, 1998, as you took your first breath, the universe celebrated with the Geminids meteor shower at its peak—120 to 140 meteors per hour painting the sky with celestial fireworks. Each shooting star streaked from the constellation Gemini, creating a breathtaking welcome for the most beautiful soul they'd ever witnessed. The universe couldn't contain its excitement, throwing the most spectacular welcome party imaginable just for you. Those meteors were the first of countless moments when the world would celebrate your existence.", 
+                    40,
+                    () => {
+                        // Enhance meteor shower during this screen
+                        if (typeof createEnhancedMeteorShower === 'function') {
+                            setTimeout(() => {
+                                createEnhancedMeteorShower();
+                            }, 500);
+                        }
+                    }
                 );
             }, 300);
             break;
@@ -133,7 +142,10 @@ function startJourney() {
 // Enter star field - ENSURE SCROLLING IS ENABLED
 function enterStarField() {
     console.log("Entering star field...");
-     // Try to play music again (in case autoplay was blocked earlier)
+    
+    // Meteor shower is already running from the intro
+    
+    // Try to play music again (in case autoplay was blocked earlier)
     const backgroundMusic = document.getElementById('backgroundMusic');
     if (backgroundMusic && backgroundMusic.paused) {
         backgroundMusic.play().catch(e => {
@@ -202,6 +214,36 @@ function enterStarField() {
 
 // Initialize elegant introduction
 function initElegantIntro() {
+    console.log("Initializing elegant intro...");
+    
+    // START: Add meteor shower immediately
+    console.log("Starting meteor shower for intro...");
+    setTimeout(() => {
+        if (typeof createMeteorShower === 'function') {
+            createMeteorShower();
+            
+            // Force the shooting stars to be visible
+            const meteorContainer = document.getElementById('meteorShower');
+            if (meteorContainer) {
+                // Make sure the container is visible
+                meteorContainer.style.display = 'block';
+                meteorContainer.style.opacity = '1';
+                meteorContainer.style.zIndex = '5';
+                
+                // Force the shooting stars to be visible
+                const stars = meteorContainer.querySelectorAll('.shooting-star');
+                stars.forEach(star => {
+                    star.style.opacity = '1';
+                    star.style.display = 'block';
+                });
+                
+                console.log(`✓ Meteor shower initialized with ${stars.length} stars`);
+            }
+        } else {
+            console.error("createMeteorShower function not available!");
+        }
+    }, 300);
+    
     elements.startJourney.addEventListener('click', startJourney);
     elements.enterConstellation.addEventListener('click', enterStarField);
     
@@ -239,5 +281,8 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM loaded, initializing elegant intro...");
     // Ensure body is not scrollable during intro
     document.body.style.overflowY = 'hidden';
+    
+    // Meteor shower is already initialized by shootingStars.js
+    
     initElegantIntro();
 });
