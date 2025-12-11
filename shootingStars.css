@@ -1,0 +1,180 @@
+/* ===== SIMPLE GEMINIDS 1998 METEOR SHOWER EFFECT ===== */
+
+/* Container for shooting stars */
+.meteor-shower {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    overflow: hidden;
+}
+
+/* Simple shooting stars - NO TRAILS */
+.shooting-star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 
+        0 0 8px 2px rgba(255, 255, 255, 0.9),
+        0 0 15px 4px rgba(255, 255, 255, 0.6),
+        0 0 25px 6px rgba(255, 255, 255, 0.3);
+    opacity: 0;
+}
+
+/* NO TRAIL PSEUDO-ELEMENTS */
+.shooting-star::before,
+.shooting-star::after {
+    display: none;
+}
+
+/* Different colors for variety */
+.shooting-star.color-1 {
+    background: #ffffff;
+    box-shadow: 
+        0 0 8px 2px rgba(255, 255, 255, 0.9),
+        0 0 15px 4px rgba(255, 255, 255, 0.6),
+        0 0 25px 6px rgba(255, 255, 255, 0.3);
+}
+
+.shooting-star.color-2 {
+    background: #d8eaff;
+    box-shadow: 
+        0 0 8px 2px rgba(216, 234, 255, 0.9),
+        0 0 15px 4px rgba(216, 234, 255, 0.6),
+        0 0 25px 6px rgba(216, 234, 255, 0.3);
+}
+
+.shooting-star.color-3 {
+    background: #b3d9ff;
+    box-shadow: 
+        0 0 8px 2px rgba(179, 217, 255, 0.9),
+        0 0 15px 4px rgba(179, 217, 255, 0.6),
+        0 0 25px 6px rgba(179, 217, 255, 0.3);
+}
+
+.shooting-star.color-4 {
+    background: #ffebcc;
+    box-shadow: 
+        0 0 8px 2px rgba(255, 235, 204, 0.9),
+        0 0 15px 4px rgba(255, 235, 204, 0.6),
+        0 0 25px 6px rgba(255, 235, 204, 0.3);
+}
+
+/* Animation for shooting across the sky */
+@keyframes shootStar {
+    0% {
+        opacity: 0;
+        transform: translateX(0) translateY(0);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100vw) translateY(100vh);
+    }
+}
+
+/* Different speeds for variety */
+.shooting-star.slow {
+    animation: shootStar 5s linear infinite;
+}
+
+.shooting-star.medium {
+    animation: shootStar 3s linear infinite;
+}
+
+.shooting-star.fast {
+    animation: shootStar 1.5s linear infinite;
+}
+
+/* Different angles for variety */
+.shooting-star.angle-1 {
+    transform: rotate(45deg);
+}
+
+.shooting-star.angle-2 {
+    transform: rotate(40deg);
+}
+
+.shooting-star.angle-3 {
+    transform: rotate(50deg);
+}
+
+.shooting-star.angle-4 {
+    transform: rotate(35deg);
+}
+
+.shooting-star.angle-5 {
+    transform: rotate(55deg);
+}
+
+/* Delayed starts for more natural appearance */
+.shooting-star.delay-1 {
+    animation-delay: 0s;
+}
+
+.shooting-star.delay-2 {
+    animation-delay: 0.5s;
+}
+
+.shooting-star.delay-3 {
+    animation-delay: 1s;
+}
+
+.shooting-star.delay-4 {
+    animation-delay: 1.5s;
+}
+
+.shooting-star.delay-5 {
+    animation-delay: 2s;
+}
+
+.shooting-star.delay-6 {
+    animation-delay: 2.5s;
+}
+
+.shooting-star.delay-7 {
+    animation-delay: 3s;
+}
+
+.shooting-star.delay-8 {
+    animation-delay: 3.5s;
+}
+
+/* Bright burst effect for some meteors */
+.shooting-star.bright {
+    width: 4px;
+    height: 4px;
+    box-shadow: 
+        0 0 12px 3px rgba(255, 255, 255, 1),
+        0 0 20px 6px rgba(255, 255, 255, 0.8),
+        0 0 35px 10px rgba(255, 255, 255, 0.4);
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (max-width: 768px) {
+    /* Fewer shooting stars on mobile for performance */
+    .meteor-shower .shooting-star:nth-child(n+8) {
+        display: none;
+    }
+    
+    .shooting-star {
+        animation-duration: 1.5s !important;
+        width: 2px;
+        height: 2px;
+    }
+    
+    .shooting-star.bright {
+        width: 3px;
+        height: 3px;
+    }
+}
