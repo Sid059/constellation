@@ -208,6 +208,9 @@ function init() {
     // Update progress bar
     updateProgress(elements);
     
+    // Meteor shower is already running from the intro
+    // No need to initialize it again
+    
     console.log("✓ Star field initialized with", starReasons.length, "stars");
     console.log("Stars created:", document.querySelectorAll('.star').length);
     
