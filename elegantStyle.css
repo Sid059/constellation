@@ -172,48 +172,53 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center; /* Center the message container */
     z-index: 2;
 }
 
-/* Screen Header */
-.screen-header {
-    margin-bottom: 40px;
+/* ===== TRANSPARENT MESSAGE BOX FOR CINEMATIC SCREENS ===== */
+.message-container {
+    background: rgba(10, 10, 10, 0.7); /* Transparent black background */
+    backdrop-filter: blur(8px); /* Blur effect like the final message */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 40px;
+    max-width: 800px;
+    width: 100%;
+    box-shadow: 
+        0 0 30px rgba(0, 0, 0, 0.5),
+        0 10px 20px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.8s ease 0.2s forwards;
     opacity: 0;
     transform: translateY(20px);
-    animation: fadeInUp 0.8s ease forwards;
-    max-width: 600px;
-    text-align: left;
 }
 
-.screen-title {
+/* Message Title (inside the container) */
+.message-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: 2.4rem;
     font-weight: 400;
     color: #ffffff;
     letter-spacing: 0.5px;
     line-height: 1.3;
-    margin-bottom: 10px;
+    margin-bottom: 25px; /* Reduced from 40px to 25px */
+    text-align: center; /* Center the title */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-/* Message Container */
-.message-container {
-    margin-bottom: 60px;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.8s ease 0.2s forwards;
-    max-width: 600px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 20px;
 }
 
 .cinematic-text {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.3rem;
     line-height: 1.7;
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.95);
     font-weight: 300;
-    min-height: 150px;
     text-align: left;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 0;
+    display: block;
+    margin-top: 20px; /* Added to create proper spacing from title */
 }
 
 .cinematic-text::after {
@@ -223,65 +228,50 @@ body {
     margin-left: 2px;
 }
 
-/* Final Screen */
-/* Find and REPLACE the final screen section with this: */
-
-/* Final Screen - MATCHES OTHER CINEMATIC SCREENS */
+/* ===== FINAL SCREEN ===== */
 .final-screen {
     background: #0a0a0a;
     position: relative;
 }
 
-/* Match the .screen-content style from other cinematic screens */
 .final-screen .screen-content {
     position: relative;
     height: 100vh;
-    max-width: 1200px; /* Same as other screens */
+    max-width: 1200px;
     margin: 0 auto;
     padding: 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     z-index: 2;
-    text-align: center; /* Center text for final screen */
-    align-items: center; /* Center items horizontally */
+    text-align: center;
+    align-items: center;
 }
 
-/* Final Header - matches .screen-header from other screens */
 .final-header {
     margin-bottom: 40px;
     opacity: 0;
     transform: translateY(20px);
     animation: fadeInUp 0.8s ease forwards;
-    max-width: 800px; /* Slightly wider for title */
+    max-width: 800px;
     text-align: center;
     width: 100%;
 }
 
 .final-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 2.8rem; /* Same as .screen-title in other screens */
+    font-size: 2.8rem;
     font-weight: 400;
     color: #ffffff;
     letter-spacing: 0.5px;
     line-height: 1.3;
-    margin-bottom: 20px; /* More space below title */
+    margin-bottom: 20px;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-/* Final Message - matches .message-container from other screens */
-.final-message {
-    margin-bottom: 60px;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.8s ease 0.2s forwards;
-    max-width: 700px;
-    width: 100%;
 }
 
 .final-text {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem; /* Slightly larger than .cinematic-text (1.3rem) */
+    font-size: 1.5rem;
     line-height: 1.7;
     color: rgba(255, 255, 255, 0.95);
     font-weight: 300;
@@ -289,111 +279,6 @@ body {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     padding: 0;
     display: block;
-}
-
-/* Enter Constellation Button - keep your existing button style but adjust position */
-.enter-constellation-btn {
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    color: #ffffff;
-    padding: 16px 45px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 300;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    opacity: 0;
-    animation: fadeIn 1s ease 0.6s forwards;
-    text-align: center;
-    min-width: 250px;
-    backdrop-filter: blur(8px);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
-    position: relative;
-    overflow: hidden;
-    margin-top: 20px;
-}
-
-.enter-constellation-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.6s ease;
-}
-
-.enter-constellation-btn:hover {
-    border-color: rgba(255, 255, 255, 0.6);
-    background: rgba(255, 255, 255, 0.18);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-.enter-constellation-btn:hover::before {
-    left: 100%;
-}
-
-/* ===== RESPONSIVE DESIGN ===== */
-
-/* Tablet */
-@media (max-width: 768px) {
-    .final-screen .screen-content {
-        padding: 40px 20px;
-        text-align: center;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .final-header,
-    .final-message {
-        text-align: center;
-        max-width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    .final-title {
-        font-size: 2.2rem; /* Same as other screens on mobile */
-    }
-    
-    .final-text {
-        font-size: 1.3rem; /* Same as other screens on mobile */
-        line-height: 1.6;
-        text-align: center;
-    }
-    
-    .enter-constellation-btn {
-        padding: 14px 35px;
-        font-size: 0.8rem;
-        min-width: 220px;
-    }
-}
-
-/* Mobile */
-@media (max-width: 480px) {
-    .final-screen .screen-content {
-        padding: 30px 15px;
-    }
-    
-    .final-title {
-        font-size: 1.9rem;
-    }
-    
-    .final-text {
-        font-size: 1.1rem;
-        line-height: 1.6;
-    }
-    
-    .enter-constellation-btn {
-        padding: 12px 30px;
-        font-size: 0.75rem;
-        min-width: 200px;
-    }
 }
 
 /* Enter Constellation Button */
@@ -418,6 +303,7 @@ body {
     border-radius: 4px;
     position: relative;
     overflow: hidden;
+    margin-top: 20px;
 }
 
 .enter-constellation-btn::before {
@@ -580,23 +466,24 @@ body {
         align-items: center;
     }
     
-    .screen-header,
     .message-container {
-        text-align: center;
-        max-width: 100%;
+        padding: 30px;
+        max-width: 90%;
         margin-left: auto;
         margin-right: auto;
     }
     
-    .screen-title {
+    .message-title {
         font-size: 1.8rem;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
     }
     
     .cinematic-text {
         font-size: 1.1rem;
-        min-height: 120px;
         text-align: center;
         line-height: 1.6;
+        margin-top: 15px;
     }
     
     /* Final Screen */
@@ -659,13 +546,20 @@ body {
         padding: 30px 15px;
     }
     
-    .screen-title {
+    .message-container {
+        padding: 25px 20px;
+        max-width: 95%;
+    }
+    
+    .message-title {
         font-size: 1.5rem;
+        margin-bottom: 15px;
+        padding-bottom: 12px;
     }
     
     .cinematic-text {
         font-size: 1rem;
-        min-height: 100px;
+        margin-top: 12px;
     }
     
     /* Final Screen */

@@ -273,6 +273,7 @@ function initElegantIntro() {
     });
     
     elements.prevScreen.style.display = 'none';
+    
     console.log("✓ Elegant intro initialized");
 }
 

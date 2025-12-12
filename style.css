@@ -1,4 +1,3 @@
-
 /* ===== BASE STYLES ===== */
 * {
     margin: 0;
@@ -8,12 +7,73 @@
 
 body {
     font-family: 'Cormorant Garamond', serif;
-    background: #0a0a0a;
     color: #ffffff;
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
 }
+
+/* ===== LIBRA CONSTELLATION BACKGROUND ===== */
+.constellation-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    overflow: hidden;
+}
+
+.constellation-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        url('./assets/Galaxy.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    filter: brightness(0.6) contrast(1.1);
+}
+
+/* Overlay for better text readability */
+.constellation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.5) 50%,
+        rgba(0, 0, 0, 0.7) 100%
+    );
+    z-index: -1;
+}
+
+/* Subtle twinkling effect on the background */
+@keyframes subtleTwinkle {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+.constellation-background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.04) 0%, transparent 40%);
+    animation: subtleTwinkle 10s infinite ease-in-out;
+    pointer-events: none;
+}
+
 
 /* ===== ADD SCROLLBAR FOR BODY ===== */
 body {
@@ -98,183 +158,280 @@ header {
     z-index: 2;
 }
 
-/* ===== IMPROVED STAR STYLES - 5 POINTS ===== */
+/* ===== SIMPLE STAR STYLES - GLOWING DOTS ONLY ===== */
 .star {
     position: absolute;
     cursor: pointer;
-    transition: all 0.4s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 10;
     transform-origin: center;
-    width: 16px;
-    height: 16px;
-    animation: twinkle 4s infinite ease-in-out;
+    width: 8px; /* Smaller */
+    height: 8px;
+    animation: intenseTwinkle 2.5s infinite ease-in-out;
     transform: translate(-50%, -50%);
-    /* Ensure rays are centered */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-@keyframes twinkle {
+/* INTENSE, BRIGHT TWINKLE ANIMATION */
+@keyframes intenseTwinkle {
     0%, 100% { 
-        opacity: 0.8;
-        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.7;
+        transform: translate(-50%, -50%) scale(0.9);
+        filter: brightness(1.2) drop-shadow(0 0 4px rgba(255, 255, 255, 0.7));
+    }
+    20% { 
+        opacity: 0.9;
+        transform: translate(-50%, -50%) scale(1.1);
+        filter: brightness(2.5) drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
+    }
+    40% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(0.85);
         filter: brightness(1) drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
     }
-    50% { 
+    60% { 
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1.15);
-        filter: brightness(1.6) drop-shadow(0 0 6px rgba(255, 255, 255, 0.7));
+        transform: translate(-50%, -50%) scale(1.2);
+        filter: brightness(3) drop-shadow(0 0 12px rgba(255, 255, 255, 1)) drop-shadow(0 0 20px rgba(255, 215, 0, 0.4));
+    }
+    80% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(0.95);
+        filter: brightness(1.8) drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
     }
 }
 
-/* Different timing for variety */
+/* Random timing for variety */
 .star:nth-child(odd) {
-    animation-delay: 0.5s;
+    animation-delay: 0.3s;
+    animation-duration: 3s;
 }
 
 .star:nth-child(3n) {
-    animation-delay: 1s;
+    animation-delay: 0.8s;
+    animation-duration: 2.2s;
 }
 
 .star:nth-child(5n) {
-    animation-delay: 1.5s;
+    animation-delay: 1.4s;
+    animation-duration: 3.5s;
+}
+
+.star:nth-child(7n) {
+    animation-delay: 0.1s;
+    animation-duration: 2.8s;
 }
 
 .star:hover {
-    transform: translate(-50%, -50%) scale(1.6);
-    filter: brightness(2.2) drop-shadow(0 0 12px rgba(255, 215, 0, 0.8));
+    transform: translate(-50%, -50%) scale(2); /* Bigger hover effect */
+    filter: brightness(2.5) drop-shadow(0 0 10px rgba(173, 216, 230, 0.8)) drop-shadow(0 0 20px rgba(135, 206, 235, 0.4));
     z-index: 20;
+    animation-play-state: paused;
 }
 
+/* DISCOVERED STARS - GOLDEN, BUT MORE SUBTLE */
 .star.discovered {
-    filter: brightness(1.8) drop-shadow(0 0 10px rgba(255, 215, 0, 0.6)) drop-shadow(0 0 20px rgba(255, 215, 0, 0.2));
-    animation: discoveredGlow 3s infinite ease-in-out;
+    filter: brightness(1.8) drop-shadow(0 0 8px rgba(255, 223, 186, 0.6)) drop-shadow(0 0 15px rgba(255, 215, 0, 0.3));
+    animation: discoveredGlowPulse 2s infinite ease-in-out;
 }
 
-@keyframes discoveredGlow {
+@keyframes discoveredGlowPulse {
     0%, 100% { 
-        filter: brightness(1.6) drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+        filter: brightness(1.6) drop-shadow(0 0 6px rgba(255, 223, 186, 0.5));
     }
     50% { 
-        filter: brightness(2.2) drop-shadow(0 0 12px rgba(255, 215, 0, 0.8));
+        filter: brightness(2.2) drop-shadow(0 0 10px rgba(255, 223, 186, 0.7)) drop-shadow(0 0 18px rgba(255, 215, 0, 0.2));
     }
 }
 
-/* Simple star core - SMALLER */
 .star::before {
     content: '';
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 4px; /* Slightly larger for better visibility */
-    height: 4px;
-    background: white;
+    width: 3px; /* Much smaller */
+    height: 3px;
+    background: #f0f8ff; /* Alice blue - more natural star color */
     border-radius: 50%;
     box-shadow: 
-        0 0 6px white,
-        0 0 12px rgba(255, 255, 255, 0.7);
-    transition: all 0.3s ease;
-    z-index: 3; /* Higher than rays */
-    opacity: 0.6;
+        0 0 8px #f0f8ff,
+        0 0 15px rgba(240, 248, 255, 0.8),
+        0 0 22px rgba(240, 248, 255, 0.4);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 3;
+    opacity: 0.9; /* Slightly transparent for depth */
 }
 
-.star:hover::before,
-.star.discovered::before {
-    width: 6px;
-    height: 6px;
+/* STAR COLOR VARIATIONS - MORE NATURAL */
+/* Blue-white stars (most common) */
+.star:nth-child(7n)::before {
+    background: #e6f7ff; /* Light cyan */
     box-shadow: 
-        0 0 12px gold,
-        0 0 24px rgba(255, 215, 0, 0.7),
-        0 0 36px rgba(255, 215, 0, 0.3);
+        0 0 8px #e6f7ff,
+        0 0 16px rgba(230, 247, 255, 0.8);
 }
 
-/* Star glow halo - SMALLER */
+/* White stars */
+.star:nth-child(11n)::before {
+    background: #ffffff; /* Pure white */
+    box-shadow: 
+        0 0 8px #ffffff,
+        0 0 16px rgba(255, 255, 255, 0.8);
+}
+
+/* Slightly yellow stars (like our Sun) */
+.star:nth-child(13n)::before {
+    background: #fffaf0; /* Floral white */
+    box-shadow: 
+        0 0 8px #fffaf0,
+        0 0 16px rgba(255, 250, 240, 0.8);
+}
+
+/* Blue stars (hotter stars) */
+.star:nth-child(17n)::before {
+    background: #e0ffff; /* Light cyan */
+    box-shadow: 
+        0 0 8px #e0ffff,
+        0 0 16px rgba(224, 255, 255, 0.8);
+}
+
+/* Natural glow - blueish tint */
 .star::after {
     content: '';
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 50%, transparent 70%);
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(240, 248, 255, 0.7) 0%,
+        rgba(173, 216, 230, 0.5) 30%,
+        rgba(135, 206, 235, 0.2) 60%,
+        transparent 80%
+    );
+    border-radius: 50% 40% 50% 40%; /* Slightly irregular shape */
     opacity: 0.6;
     transition: all 0.5s ease;
-    z-index: 1;
+    z-index: 2;
+    filter: blur(0.5px);
+}
+
+/* HOVER EFFECTS */
+.star:hover::before {
+    width: 4px;
+    height: 4px;
+    background: #ffffff; /* Pure white on hover */
+    box-shadow: 
+        0 0 12px #ffffff,
+        0 0 24px rgba(255, 255, 255, 0.8),
+        0 0 36px rgba(173, 216, 230, 0.6);
+}
+
+.star.discovered::before {
+    background: #fff8dc; /* Cornsilk - soft golden for discovered */
+    box-shadow: 
+        0 0 10px #fff8dc,
+        0 0 20px rgba(255, 248, 220, 0.8),
+        0 0 30px rgba(255, 248, 220, 0.4);
 }
 
 .star:hover::after,
 .star.discovered::after {
-    width: 32px; /* Smaller */
-    height: 32px; /* Smaller */
-    opacity: 0.6;
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+    border-radius: 40% 50% 40% 50%;
+    filter: blur(1px);
+}
+
+.star:hover::after {
+    background: radial-gradient(
+        ellipse at center,
+        rgba(255, 255, 255, 0.6) 0%,
+        rgba(173, 216, 230, 0.4) 40%,
+        rgba(135, 206, 235, 0.2) 70%,
+        transparent 90%
+    );
 }
 
 .star.discovered::after {
-    animation: pulseGlow 2s infinite alternate;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(255, 248, 220, 0.5) 0%,
+        rgba(255, 235, 205, 0.3) 40%,
+        rgba(255, 222, 173, 0.1) 70%,
+        transparent 90%
+    );
+    animation: discoveredGlow 2s infinite alternate;
 }
 
-@keyframes pulseGlow {
+@keyframes discoveredGlow {
     0% {
-        width: 28px;
-        height: 28px;
-        opacity: 0.4;
+        width: 14px;
+        height: 14px;
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
     }
     100% {
-        width: 36px;
-        height: 36px;
-        opacity: 0.6;
+        width: 20px;
+        height: 20px;
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.05) rotate(5deg);
     }
 }
 
-/* STAR RAYS - 5 POINTS INSTEAD OF 8 */
-.star-ray {
+
+/* Subtle sparkle effect for extra brightness */
+.star .sparkle {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 1px; /* Thinner */
-    height: 0;
-    background: linear-gradient(to bottom, 
-        transparent 0%, 
-        rgba(255, 255, 255, 0.9) 20%, 
-        rgba(255, 255, 255, 0.4) 60%, 
-        transparent 100%);
-    transform-origin: center top;
+    width: 1px;
+    height: 1px;
+    background: white;
+    border-radius: 50%;
     opacity: 0;
-    transition: all 0.5s ease;
-    z-index: 2; /* Below the core */
+    transform: translate(-50%, -50%) scale(0);
+    box-shadow: 0 0 4px white;
 }
 
-.star:hover .star-ray,
-.star.discovered .star-ray {
-    height: 8px; /* Shorter */
-    opacity: 0.7;
+.star:hover .sparkle,
+.star.discovered .sparkle {
+    opacity: 1;
+    animation: sparkleFlash 0.6s infinite alternate;
 }
 
-.star.discovered .star-ray {
-    animation: rayPulse 1.5s infinite alternate;
-}
-
-@keyframes rayPulse {
+@keyframes sparkleFlash {
     0% {
-        height: 6px;
-        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        opacity: 0;
     }
     100% {
-        height: 9px;
-        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.5) rotate(180deg);
+        opacity: 1;
     }
 }
 
-/* Position 5 rays around the star (72° apart) for a 5-pointed star */
-.star-ray:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg); }
-.star-ray:nth-child(2) { transform: translate(-50%, -50%) rotate(72deg); }
-.star-ray:nth-child(3) { transform: translate(-50%, -50%) rotate(144deg); }
-.star-ray:nth-child(4) { transform: translate(-50%, -50%) rotate(216deg); }
-.star-ray:nth-child(5) { transform: translate(-50%, -50%) rotate(288deg); }
+/* SIZE VARIATIONS FOR REALISM */
+.star:nth-child(4n)::before {
+    width: 2.5px;
+    height: 2.5px;
+}
+
+.star:nth-child(8n)::before {
+    width: 3.5px;
+    height: 3.5px;
+}
+
+.star:nth-child(12n)::before {
+    width: 2px;
+    height: 2px;
+}
 
 
 /* ===== CONTROLS & PROGRESS ===== */
@@ -512,9 +669,9 @@ header {
 
 /* ===== FIXED FINAL MESSAGE - PROPERLY CENTERED ===== */
 .final-message {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: absolute; /* ← CHANGE THIS */
+    top: 50%;
+    left: 50%;
     width: 100%;
     height: 100%;
     display: flex;
@@ -524,6 +681,7 @@ header {
     opacity: 0;
     visibility: hidden;
     transition: all 0.8s ease;
+    transform: translate(-50%, -50%);
 }
 
 .final-message.active {
@@ -542,7 +700,6 @@ header {
     box-shadow: 
         0 0 60px rgba(255, 255, 255, 0.1),
         0 20px 40px rgba(0, 0, 0, 0.4);
-    position: relative;
     margin: 20px;
     transform: translateY(30px) scale(0.95);
     transition: transform 0.8s ease, opacity 0.8s ease;
@@ -637,42 +794,6 @@ body::-webkit-scrollbar-thumb {
 
 body::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.3);
-}
-
-/* For desktop specifically */
-@media (min-width: 769px) {
-    .final-content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0.95);
-        margin: 0;
-    }
-    
-    .final-message.active .final-content {
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
-
-.final-content h2 {
-    color: #ffffff;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.4rem;
-    font-weight: 400;
-    margin-bottom: 35px;
-    letter-spacing: 0.5px;
-    line-height: 1.3;
-}
-
-.final-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
-    line-height: 1.8;
-    margin-bottom: 45px;
-    color: rgba(255, 255, 255, 0.95);
-    font-weight: 300;
-    letter-spacing: 0.3px;
-    white-space: pre-line;
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
