@@ -55,12 +55,14 @@ const starReasons = [
 "If love had a face, it would look like you first thing in the morning, sleepy and soft. It would sound like your laughter. It would feel like home.",
 ];
 
-const finalMessage = `You've discovered all 27 reasons why you shine, my love. Each one represents just a fraction of why you're so special to me. But like the universe, my love for you is infinite and ever-expanding.
+const finalMessage = `You've discovered all 27 love letters I wrote among the stars. 
+Each one is a piece of my heart, shared with you through the language of starlight.
+But this constellation is just the beginning—my love for you stretches beyond 
+all known galaxies, beyond all time, forever expanding like the universe itself.
 
-On your birthday and every day, I want you to remember:
-You are loved more than all the stars in all the galaxies combined.
-
-Happy Birthday, my shining star ❤️💫`;
+On your birthday and every day, remember this:
+You are loved more than all the stars in all the skies combined.
+Happy Birthday, my forever constellation ❤️💫`;
 
 // ===== IMPROVED STAR POSITION GENERATION =====
 function generateRandomStarPositions(count, minDistance = 48) { // 0.5 inch = ~48 pixels
@@ -402,21 +404,10 @@ function revealStar(index, elements) {
     
     // Show message
     showStarMessage(index, elements);
-    
-    // Check if this was the last star
-    if (discoveredStars.size === starReasons.length) {
-        // Show final message after a short delay
-        setTimeout(() => {
-            // Close the regular modal first
-            elements.modalOverlay.classList.remove('active');
-            // Then show the final message
-            showFinalMessage(elements);
-        }, 800); // 0.8 second delay
-    }
 }
 
 function showStarMessage(index, elements) {
-    elements.modalTitle.textContent = `Reason #${index + 1}`;
+    elements.modalTitle.textContent = `Starlit Letter #${index + 1}`;
     elements.modalMessage.textContent = starReasons[index];
     elements.modalOverlay.classList.add('active');
 }
