@@ -34,7 +34,7 @@ body {
     background: 
         url('./assets/Galaxy.jpeg') no-repeat center center fixed;
     background-size: cover;
-    filter: brightness(1) contrast(1.5);
+    filter: brightness(0.8) contrast(1.1);
 }
 
 /* Overlay for better text readability */
@@ -908,3 +908,4 @@ body::-webkit-scrollbar-thumb:hover {
         -webkit-overflow-scrolling: touch;
     }
 }
+
