@@ -56,13 +56,14 @@ const starReasons = [
 ];
 
 const finalMessage = `You've discovered all 27 love letters I wrote among the stars. 
-Each one is a piece of my heart, shared with you through the language of starlight.
-But this constellation is just the beginning—my love for you stretches beyond 
-all known galaxies, beyond all time, forever expanding like the universe itself.
+Each one is a piece of my heart, written in starlight just for you.
+Happy birthday to my favorite person in the whole wide world. I wish you health that feels like a warm, steady hug, success that makes you glow from the inside, and love that wraps around you like a cozy blanket—our love, your safe place.
+I don’t just love the pretty parts of you. I love the real, soft, messy, beautiful you. The way you laugh a little too loudly, the way your heart cares so deeply it almost spills over, the way you turn even ordinary moments into memories I’ll treasure forever. I’m here for the easy smiles and the quiet tears, for celebrating your wins and holding your hand through the lessons. I’m here to share every sunrise, every starry whisper, and everything in between.
+But darling, this sky of stars is only the beginning, my love for you stretches beyond all known galaxies, beyond all time, forever expanding like the universe itself. It grows, expands, and glows brighter with every breath I take.
 
 On your birthday and every day, remember this:
 You are loved more than all the stars in all the skies combined.
-Happy Birthday, my forever constellation ❤️💫`;
+Happy Birthday, my forever home among the stars ❤️💫`;
 
 // ===== IMPROVED STAR POSITION GENERATION =====
 function generateRandomStarPositions(count, minDistance = 48) { // 0.5 inch = ~48 pixels
@@ -509,3 +510,4 @@ function setupEventListeners(elements) {
 // ===== MAKE INIT FUNCTION AVAILABLE =====
 window.initConstellation = init;
 console.log("Star field script loaded and ready");
+
