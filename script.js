@@ -428,7 +428,7 @@ function updateProgress(elements) {
     
     // Update close modal button text (but don't auto-show final message)
     if (discovered === total) {
-        elements.closeModal.innerHTML = 'See Final Message <i class="fas fa-heart"></i>';
+        elements.closeModal.innerHTML = 'Another Whisper From Me <i class="fas fa-heart"></i>';
     } else {
         elements.closeModal.innerHTML = 'Continue Exploring <i class="fas fa-rocket"></i>';
     }
@@ -510,4 +510,5 @@ function setupEventListeners(elements) {
 // ===== MAKE INIT FUNCTION AVAILABLE =====
 window.initConstellation = init;
 console.log("Star field script loaded and ready");
+
 
