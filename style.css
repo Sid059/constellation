@@ -34,7 +34,7 @@ body {
     background: 
         url('./assets/Galaxy.jpeg') no-repeat center center fixed;
     background-size: cover;
-    filter: brightness(0.6) contrast(1.1);
+    filter: brightness(1) contrast(1.5);
 }
 
 /* Overlay for better text readability */
