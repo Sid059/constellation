@@ -81,7 +81,7 @@ function goToScreen(screenIndex) {
         case 1:
             setTimeout(() => {
                 typeWriter(elements.moonText, 
-                    "As you took your first breath at 1:30 AM, my love, the moon paused its journey across the sky. It watched as you took your first breath, casting its silver glow as if to say, 'Here comes someone who will light up lives.' That moonlight was the universe's first gift to you a promise that magic would follow wherever you go, and that you were meant to shine brighter than any celestial body.", 
+                    "December 14, 1998, as you took your first breath at 1:30 AM, my love, the moon paused its journey across the sky. It watched as you took your first breath, casting its silver glow as if to say, 'Here comes someone who will light up lives.' That moonlight was the universe's first gift to you a promise that magic would follow wherever you go, and that you were meant to shine brighter than any celestial body.", 
                     40
                 );
             }, 300);
@@ -100,7 +100,7 @@ function goToScreen(screenIndex) {
             setTimeout(() => {
                 // Update meteor text with specific 1998 details
                 typeWriter(elements.meteorText, 
-                    "On December 14, 1998, as you took your first breath, the universe celebrated with the Geminids meteor shower at its peak—120 to 140 meteors per hour painting the sky with celestial fireworks. Each shooting star streaked from the constellation Gemini, creating a breathtaking welcome for the most beautiful soul they'd ever witnessed. The universe couldn't contain its excitement, throwing the most spectacular welcome party imaginable just for you. Those meteors were the first of countless moments when the world would celebrate your existence.", 
+                    "The universe celebrated your arrival with the Geminids meteor shower, painting the sky with celestial fireworks. Each shooting star streaked from the constellation Gemini, creating a breathtaking welcome for the most beautiful soul they'd ever witnessed. The universe couldn't contain its excitement, throwing the most spectacular welcome party imaginable just for you. Those meteors were the first of countless moments when the world would celebrate your existence.", 
                     40,
                     () => {
                         // Enhance meteor shower during this screen
